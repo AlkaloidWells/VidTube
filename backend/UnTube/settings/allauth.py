@@ -24,6 +24,8 @@ SOCIALACCOUNT_PROVIDERS = {
             'profile',
             'email',
             'https://www.googleapis.com/auth/youtube',
+            #'http://127.0.0.1:8000/accounts/google/login/callback/'
+
         ],
         'AUTH_PARAMS': {
             # To refresh authentication in the background, set AUTH_PARAMS['access_type'] to offline.
