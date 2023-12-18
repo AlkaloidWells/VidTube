@@ -1,0 +1,93 @@
+{% load humanize %}
+{% if watching %}
+    {% for playlist in playlists %}
+        <div class="col">
+
+            <div class="card overflow-auto" style="background-color: {{ bg_color|default:"#357779" }};">
+                <img  class="bd-placeholder-img card-img-top" src="{{ playlist.get_playlist_thumbnail_url }}" style="max-width:100%; height: 200px;   object-fit: cover;" alt="{{ playlist.name }} thumbnail">
+
+                <div class="card-body">
+                    <h5 class="card-title"><a href="{% url 'playlist' playlist.playlist_id %}" class="stretched-link" style="text-decoration: none; color: white">{{ playlist.name }}</a></h5>
+                    <p class="card-text">
+                        <span class="badge bg-{% if playlist.get_watch_time_left == "0secs." %}success{% else %}primary{% endif %} text-white">{{ playlist.get_watched_videos_count }}/{{ playlist.get_watchable_videos_count }} viewed</span>
+                        {% if playlist.get_watch_time_left != "0secs." %}<span class="badge bg-dark text-white">{{ playlist.get_watch_time_left }} left</span>{% endif %}
+                    </p>
+                    <p class="card-text"><small class="text-white-50">Last watched {{ playlist.last_watched|naturaltime }}</small></p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+{% else %}
+    {% for playlist in playlists %}
+        <div class="col">
+            <div class="card overflow-auto" style="background-color: {{ bg_color|default:"#357779" }};">
+                <a href="{% url 'playlist' playlist.playlist_id %}" style="text-decoration: none; color: black">
+                    <img  class="bd-placeholder-img card-img-top" src="{{ playlist.get_playlist_thumbnail_url }}" style="max-width:100%; height: 200px;   object-fit: cover;" alt="{{ playlist.name }} thumbnail">
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a href="{% url 'playlist' playlist.playlist_id %}" style="text-decoration: none; color: white">
+                            {% if playlist.user_label %}
+                                <span style="border-bottom: 3px #eeeaea dashed;">{{ playlist.user_label }}</span>
+                            {% else %}
+                            {{ playlist.name }}
+                            {% endif %}
+                        </a>
+                    </h5>
+
+                    <p class="card-text text-uppercase">
+                        {% if playlist.is_user_owned %}<span class="badge bg-light text-black-50">OWNED</span>{% else %}<span class="badge bg-light text-black-50">IMPORTED</span>{% endif %}
+                        {% if playlist.is_private_on_yt %}<span class="badge bg-secondary text-white">Private</span> {% endif %}
+                        <span class="badge bg-warning text-black-50">{{ playlist.video_count }} videos</span>
+                        <span class="badge bg-dark text-white">{{ playlist.playlist_duration }} </span>
+                        {% if playlist.is_from_yt %}<span class="badge bg-danger text-black-50">YT</span> {% endif %}
+                        {% if playlist.marked_as == "watching" %}<span class="badge bg-primary text-white">WATCHING</span>{% endif %}
+
+                    </p>
+                    {% if show_tags|default:True %}
+                        {% if playlist.tags.all %}
+                            <p class="card-text">
+                                <span class="d-flex justify-content-start flex-wrap">
+                                    <small>
+                                        <span style="color: #eed868;" class="me-lg-1 mb-lg-1">
+                                            <i class="fas fa-tags"></i>
+                                        </span>
+                                    </small>
+                                    {% for tag in playlist.tags.all|slice:"0:4" %}
+                                        <span class="badge rounded-pill bg-info mb-lg-1 me-lg-1 text-black-50">
+                                            {{ tag.name }}
+                                        </span>
+                                        {% if forloop.last and playlist.tags.all.count > 4 %}
+                                            <small><span class="text-black-50"> & {{ playlist.tags.all.count|add:"-4" }} more</span></small>
+                                        {% endif %}
+                                    {% endfor %}
+
+                                </span>
+                            </p>
+                        {% endif %}
+
+                    {% endif %}
+
+                    {% if show_controls %}
+    <span class="d-flex justify-content-center">
+        <a href="https://www.youtube.com/playlist?list={{ playlist.playlist_id }}" class="btn btn-light me-1" target="_blank" id="share_link" style=""><i class="fas fa-external-link-alt" aria-hidden="true"></i></a>
+
+        <button class="btn btn-dark" type="button" hx-get="{% url 'mark_playlist_as' playlist.playlist_id 'favorite' %}" hx-target="#playlist-{{ forloop.counter }}-fav">
+            <div id="playlist-{{ forloop.counter }}-fav">
+                {% if playlist.is_favorite %}
+                    <i class="fas fa-star" style="color: #fafa06"></i>
+                {% else %}
+                    <i class="far fa-star"></i>
+                {% endif %}
+            </div>
+        </button>
+    </span>
+    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+{% endif %}

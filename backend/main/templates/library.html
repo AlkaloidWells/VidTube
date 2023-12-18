@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row row-cols-1 row-cols-md-3 g-4" >
+    <div class="col">
+        <a href="{% url 'library' 'all' %}" class="text-decoration-none text-white">
+        <div class="card h-100" style="background-color: #64381a;">
+            <div class="card-body">
+                <h4 class="card-title">All Playlists</h4>
+                    <p class="card-text">Everything.</p>
+            </div>
+        </div>
+        </a>
+    </div>
+    <div class="col">
+        <a href="{% url 'library' 'user-owned' %}" class="text-decoration-none text-white">
+        <div class="card h-100" style="background-color: #1A4464;">
+            <div class="card-body">
+                <h4 class="card-title">Your YouTube Playlists</h4>
+                    <p class="card-text">View a list of all the playlists you own on YouTube.</p>
+            </div>
+        </div>
+        </a>
+    </div>
+
+    <div class="col">
+        <a href="{% url 'library' 'imported' %}" class="text-decoration-none text-white">
+        <div class="card h-100" style="background-color: #1a645e;">
+            <div class="card-body">
+                <h4 class="card-title">Imported Playlists</h4>
+                <p class="card-text">View a list of all the external playlists you imported from YouTube.</p>
+            </div>
+        </div>
+        </a>
+    </div>
+    <div class="col">
+        <a href="{% url 'library' 'favorites' %}" class="text-decoration-none text-white">
+        <div class="card h-100" style="background-color: #aa8c2e;">
+            <div class="card-body">
+                <h4 class="card-title">Favorite Playlists</h4>
+                <p class="card-text">All the playlists you've marked favorite.</p>
+            </div>
+        </div>
+        </a>
+    </div>
+    <div class="col">
+        <a href="{% url 'library' 'watching' %}" class="text-decoration-none text-white">
+        <div class="card h-100" style="background-color: #541a64;">
+            <div class="card-body">
+                <h4 class="card-title">Watching Playlists</h4>
+                <p class="card-text">All the playlists you're currently watching.</p>
+            </div>
+        </div>
+        </a>
+    </div>
+    <div class="col">
+        <a href="{% url 'library' 'plan-to-watch' %}" class="text-decoration-none text-white">
+        <div class="card h-100" style="background-color: #641a29;">
+            <div class="card-body">
+                <h4 class="card-title">Plan to Watch</h4>
+                <p class="card-text">Plan to watch a playlist later? Add it here.</p>
+            </div>
+        </div>
+        </a>
+    </div>
+    <div class="col">
+        <a href="{% url 'library' 'yt-mix' %}" class="text-decoration-none text-white">
+        <div class="card h-100" style="background-color: #bd39a7;">
+            <div class="card-body">
+                <h5 class="card-title">Your YouTube Mixes <span class="badge bg-warning">BETA</span> </h5>
+                <p class="card-text">YouTube creates nice mixes that relate to songs you're currently jamming to. You can import those YT Mixes by going over to Import. Any YouTube mixes you import will all be here.</p>
+            </div>
+        </div>
+        </a>
+    </div>
+
+    <div class="col">
+        <a href="{% url 'library' 'unavailable-videos' %}" class="text-decoration-none text-white">
+        <div class="card h-100" style="background-color: #7f8675;">
+            <div class="card-body">
+                <h5 class="card-title">Unavailable YouTube Videos</h5>
+                <p class="card-text">List of videos in your collection that went unavailable on YouTube. Note that all details except the video title will have been deleted once a video goes unavailable on YouTube.</p>
+            </div>
+        </div>
+        </a>
+    </div>
+
+    <!--
+    <div class="col">
+        <a href="#" class="text-decoration-none text-white">
+        <div class="card h-100" style="background-color: #969291;">
+            <div class="card-body">
+                <h5 class="card-title">Your UnTube Playlists</h5>
+                <p class="card-text">UnTube playlists are playlists can contain YouTube videos and YouTube playlists which can then be shared with other users via a link. Coming soon. Maybe.</p>
+            </div>
+        </div>
+        </a>
+    </div>
+    -->
+    <div class="col">
+        <a href="#" class="text-decoration-none text-white">
+
+        <div class="card h-100" style="background-color: #d04623;">
+            <div class="card-body">
+                <h5 class="card-title">Open a Random Playlist</h5>
+                <p class="card-text mt-4">
+                    <form action="{% url 'library' 'random' %}" method="post">
+                        {% csrf_token %}
+                        <select onchange="this.form.submit()" class="form-select w-50 bg-success text-white" name="playlistsType">
+                              <option value="From" selected>From</option>
+                                <option value="All">All</option>
+                              <option value="Favorites">Favorites</option>
+                            <option value="Watching">Watching</option>
+                            <option value="Plan to Watch">Plan to Watch</option>
+                        </select>
+                     </form>
+                </p>
+            </div>
+        </div>
+        </a>
+    </div>
+</div>
+<br>
+    <div class="card bg-dark text-white">
+            <div class="card-header">
+                <div class="d-flex justify-content-center">
+                    <h3><span style="border-bottom: 3px #ffffff dashed;">Your Playlist Tags</span><small class="ms-2"><span class="badge bg-warning text-black-50 rounded-pill">{{ user.playlist_tags.all.count }}</span></small> </h3>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="d-flex justify-content-evenly h4">
+                    {% if user.playlist_tags.all %}
+                    <div class="w-75 d-flex justify-content-center flex-wrap">
+                    {% for tag in user.playlist_tags.all %}
+                        <a href="{% url 'tagged_playlists' tag.name %}" style="text-decoration: none" class="me-lg-1 mb-lg-1">
+                        <span class="badge rounded-pill bg-warning bg-gradient text-black-50">{{ tag.name }} <span class="badge bg-dark text-white">{{ tag.playlists.all.count }}</span> </span>
+                        </a>
+                    {% endfor %}
+                    </div>
+                    {% else %}
+                        You haven't created any playlist tags yet.
+                    {% endif %}
+                </div>
+
+            </div>
+            {% if user.playlist_tags.all %}
+            <div class="card-footer">
+                <div class="d-flex justify-content-center">
+                    <h3>
+                        <a href="{% url 'search' %}" class="btn btn-success">Filter Playlists by Tags</a>
+                    </h3>
+                </div>
+            </div>
+            {% endif %}
+    </div>
+{% endblock %}

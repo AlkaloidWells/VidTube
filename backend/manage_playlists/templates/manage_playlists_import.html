@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom border-2 border-dark">
+        <h1 class="h2">Import Public YouTube playlists</h1>
+    </div>
+    <br>
+
+<h4>Enter a Playlist link or list multiple Playlist links line by line</h4>
+    <div id="import-playlists-from">
+      <textarea name="import-playlist-textarea" class="form-control" id="video-notes-text-area" placeholder="Enter here" rows="5"
+                hx-post="{% url 'manage_save' 'manage_playlists_import_textarea' %}"
+                hx-trigger="keyup changed delay:500ms"
+                hx-indicator="#spinner">{{ manage_playlists_import_textarea }}</textarea>
+    </div>
+      <br>
+      <div class="d-flex justify-content-start">
+          <button type="button" hx-post="{% url 'manage_import_playlists' %}" hx-include="[id='import-playlists-from']" hx-target="#import-playlists-results" hx-indicator="#spinner" class="btn btn-success">Import!</button>
+
+            <div id="spinner" class="htmx-indicator ms-3 mt-2">
+                <div class="spinner-border" role="status">
+                </div>
+            </div>
+      </div>
+      <br>
+    <div id="import-playlists-results">
+
+    </div>
+
+
+  <br>
+
+
+  </div>
+{% endblock %}
+

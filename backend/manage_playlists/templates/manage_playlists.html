@@ -1,0 +1,72 @@
+
+{% extends 'base.html' %}
+{% block content %}
+    {% if user.profile.imported_yt_playlists %}
+    <div hx-get="{% url 'user_playlists_updates' 'check-for-updates' %}" hx-trigger="load" hx-swap="outerHTML">
+
+    </div>
+    {% endif %}
+<div class="row row-cols-1 row-cols-md-3 g-4" data-masonry='{"percentPosition": true }'>
+    <div id="manage-import-playlists-btn" class="col">
+        <a  href="{% url 'manage_view_page' 'import' %}" class="text-decoration-none text-white">
+        <div class="card" style="background-color: #25641a;">
+            <div class="card-body">
+                <h4 class="card-title">Import Playlists</h4>
+                    <p class="card-text">Add public playlists to your own collection. Unfortunately, the YouTube API doesn't let us retrieve your watch later playlist :(</p>
+            </div>
+        </div>
+        </a>
+    </div>
+    <div id="manage-create-playlists-btn" class="col">
+        <a  href="{% url 'manage_view_page' 'create' %}" class="text-decoration-none text-white">
+        <div class="card" style="background-color: #64631a;">
+            <div class="card-body">
+                <h4 class="card-title">Create a New Playlist</h4>
+                    <p class="card-text">Make a new playlist using the videos in your collection and export it to YouTube!</p>
+            </div>
+        </div>
+        </a>
+    </div>
+    <div id="manage-untube-playlists-btn" class="col">
+        <a  hx-get="{% url 'manage_view_page' 'untube' %}" hx-trigger="click" hx-target="#manage-pl-div" class="text-decoration-none text-white">
+        <div class="card" style="background-color: #641a52;">
+            <div class="card-body">
+                <h4 class="card-title">Create an UnTube Playlist</h4>
+                <p class="card-text">UnTube playlists are playlists can contain YouTube videos and YouTube playlists which can then be shared with other users via a link. Coming soon. Maybe.</p>
+            </div>
+        </div>
+        </a>
+    </div>
+    <div id="manage-add-videos-btn" class="col">
+        <a  hx-get="{% url 'manage_view_page' 'add-videos-to-playlists' %}" hx-trigger="click" hx-target="#manage-pl-div" class="text-decoration-none text-white">
+        <div class="card" style="background-color: #a75e27;">
+            <div class="card-body">
+                <h4 class="card-title">Add Videos to Existing Playlists</h4>
+                <p class="card-text">Add videos to existing YouTube playlists by searching for YouTube videos in your UnTube collection or by inputting YouTube video links.</p>
+            </div>
+        </div>
+        </a>
+    </div>
+    <div id="manage-delete-playlists-btn" class="col">
+        <a  hx-get="{% url 'manage_view_page' 'nuke-playlists' %}" hx-trigger="click" hx-target="#manage-pl-div" class="text-decoration-none text-white">
+        <div class="card" style="background-color: #286593;">
+            <div class="card-body">
+                <h4 class="card-title">Merge Playlists</h4>
+                <p class="card-text">Merge two or more playlists into a single one.</p>
+            </div>
+        </div>
+        </a>
+    </div>
+    <div id="manage-delete-playlists-btn" class="col">
+        <a  hx-get="{% url 'manage_view_page' 'nuke-playlists' %}" hx-trigger="click" hx-target="#manage-pl-div" class="text-decoration-none text-white">
+        <div class="card" style="background-color: #a72744;">
+            <div class="card-body">
+                <h4 class="card-title">Nuke Playlists</h4>
+                <p class="card-text">Bulk delete multiple YouTube playlists, or just remove them from UnTube.</p>
+            </div>
+        </div>
+        </a>
+    </div>
+
+</div>
+{% endblock %}

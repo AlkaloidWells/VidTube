@@ -1,0 +1,196 @@
+
+{% extends 'base.html' %}
+{% load humanize %}
+{% load static %}
+
+{% block content %}
+
+
+    <div id="view_playlist">
+    {% if playlist.is_user_owned and not playlist.playlist_id == "LL" %}
+
+        <div class="table-responsive" id="videos-div">
+
+            <div id="settings-status-div" class="text-dark">
+
+            </div>
+
+              <div class="card bg-dark text-white mb-3">
+                <div class="card-body">
+                    <div id="settings-form">
+
+                    <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Playlist Name</h6>
+                    </div>
+                    <div class="col-sm-9 text-white-50">
+                        <input type="text" class="form-control" name="playlistTitle" value="{{ playlist.name }}" aria-describedby="plTitleHelp">
+                        <div id="plTitleHelp" class="form-text">Maximum of 150 characters. Make sure the title does not contain '>' or '<'. They will be replaced by 'greater than' or 'less than' if found.</div>
+                    </div>
+                  </div>
+                    <hr>
+                    <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Playlist User Label</h6>
+                    </div>
+                    <div class="col-sm-9 text-white-50">
+                        <input type="text" class="form-control" name="user_label" placeholder="Enter a user label to identify this playlist with" value="{{ playlist.user_label }}">
+                    </div>
+                  </div>
+
+                      <hr>
+
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <h6 class="mb-0">Created By</h6>
+                        </div>
+                        <div class="col-sm-9 text-white-50">
+                            <input type="text" class="form-control" id="fullname" value="{{ playlist.channel_name }}" disabled>
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="row">
+                          <div class="col-sm-3">
+                            <h6 class="mb-0">Playlist Description</h6>
+                          </div>
+
+                            <div class="col-sm-9 text-white-50">
+                                <textarea class="form-control form-text" name="playlistDesc" rows="6" placeholder="Enter a playlist description here!" aria-describedby="plDescHelp">{{ playlist.description }}</textarea>
+                                <div id="plDescHelp" class="form-text">Maximum of 5000 characters. Make sure the description does not contain '>' or '<'. They will be replaced by 'greater than' or 'less than' if found.</div>
+                            </div>
+                        </div>
+                      <hr>
+                    <div class="row">
+                      <div class="col-sm-3">
+                          <h6 class="mb-0">Playlist Privacy</h6>
+                        </div>
+                        <div class="col-sm-9 text-white-50">
+                            <select  class="form-select w-25" name="playlistPrivacy">
+                                  <option value="Public" {% if not playlist.is_private_on_yt %}selected{% endif %}>Public</option>
+                                  <option value="Private" {% if playlist.is_private_on_yt %}selected{% endif %}>Private</option>
+                            </select>
+                        </div>
+                        </div>
+                      <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                          <h6 class="mb-0">Check for updates upon visit</h6>
+                        </div>
+                        <div class="col-sm-9 text-white-50">
+                            <input class="form-check-input" type="checkbox" value="" name="pl-auto-update" {% if playlist.auto_check_for_updates %}checked{% endif %}>
+                        </div>
+                      </div>
+
+                        <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                          <h6 class="mb-0">Danger Zone</h6>
+                        </div>
+                        <div class="col-sm-9 text-white-50 d-flex justify-content-start">
+                            <div id="delete-box">
+                                <a hx-get="{% url 'delete_playlist' playlist.playlist_id %}" hx-target="#delete-box" hx-vals='{"confirmed": "no"}' class="btn btn-outline-danger" hx-indicator="#delete-pl-loader">Delete Playlist From YouTube</a>
+                            </div>
+                            <div id="delete-pl-loader">
+                            <img src="{% static 'svg-loaders/rings.svg' %}" height="40" width="40" class="htmx-indicator">
+                            </div>
+                        </div>
+                      </div>
+
+                </div>
+                </div>
+              </div>
+
+            <div class="d-flex justify-content-center">
+                <div class="btn-group">
+                    <a href="{% url 'playlist' playlist.playlist_id %}" class="btn btn-secondary me-2">Back</a>
+
+                    <a href="#navbar" hx-post="{% url 'update_playlist_settings' playlist.playlist_id %}" hx-include="[id='settings-form']" hx-target="#settings-status-div"
+                            type="button" class="btn btn-success me-2">Save</a>
+                </div>
+              </div>
+        </div>
+
+    {% else %}
+        <div class="table-responsive" id="videos-div">
+
+            <div id="settings-status-div" class="text-dark">
+
+            </div>
+
+              <div class="card bg-dark text-white mb-3">
+                <div class="card-body">
+                    <div id="settings-form">
+
+                    <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Playlist Name on YouTube</h6>
+                    </div>
+                    <div class="col-sm-9 text-white-50">
+                        <input type="text" class="form-control" name="username" id="username" value="{{ playlist.name }}" disabled>
+                    </div>
+                  </div>
+
+                      <hr>
+                        <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Playlist User Label</h6>
+                    </div>
+                    <div class="col-sm-9 text-white-50">
+                        <input type="text" class="form-control" name="user_label" placeholder="Enter a user label to identify this playlist with" value="{{ playlist.user_label }}">
+                    </div>
+                  </div>
+
+                      <hr>
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <h6 class="mb-0">Created By</h6>
+                        </div>
+                        <div class="col-sm-9 text-white-50">
+                            <input type="text" class="form-control" id="fullname" value="{{ playlist.channel_name }}" disabled>
+                        </div>
+                      </div>
+
+                        <hr>
+                    {% if not playlist.is_yt_mix %}
+                        <div class="row">
+                        <div class="col-sm-3">
+                          <h6 class="mb-0">Automatically check for updates upon visit</h6>
+                        </div>
+                        <div class="col-sm-9 text-white-50">
+                              <input class="form-check-input" type="checkbox" value="" name="pl-auto-update" {% if playlist.auto_check_for_updates %}checked{% endif %}>
+                        </div>
+                      </div>
+                        <hr>
+                    {% endif %}
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <h6 class="mb-0">Danger Zone</h6>
+                        </div>
+                        <div class="col-sm-9 text-white-50 d-flex justify-content-start">
+                            <div id="delete-box">
+                                <a hx-get="{% url 'delete_playlist' playlist.playlist_id %}" hx-target="#delete-box" hx-vals='{"confirmed": "no"}' class="btn btn-outline-danger" hx-indicator="#delete-pl-loader">Remove Playlist From UnTube</a>
+                            </div>
+                            <div id="delete-pl-loader">
+                            <img src="{% static 'svg-loaders/rings.svg' %}" height="40" width="40" class="htmx-indicator">
+                            </div>
+                        </div>
+                      </div>
+
+                </div>
+                </div>
+              </div>
+
+            <div class="d-flex justify-content-center">
+                            <div class="btn-group">
+                <a href="{% url 'playlist' playlist.playlist_id %}" class="btn btn-secondary me-2">Back</a>
+
+                <a href="#navbar" hx-post="{% url 'update_playlist_settings' playlist.playlist_id %}" hx-include="[id='settings-form']" hx-target="#settings-status-div"
+                            type="button" class="btn btn-success me-2">Save</a>
+                                </div>
+              </div>
+        </div>
+    {% endif %}
+
+
+    </div>
+{% endblock %}
