@@ -1,5 +1,5 @@
 """
-ASGI config for UnTube project.
+ASGI config for VidTube project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,7 +11,7 @@ import os
 # from dotenv import load_dotenv
 from django.core.asgi import get_asgi_application
 
-settings_module = 'backend.UnTube.settings'
+settings_module = 'backend.VidTube.settings'
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', settings_module)
 
 # to use env variables on pythonanywhere

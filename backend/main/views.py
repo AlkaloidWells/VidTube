@@ -105,7 +105,7 @@ def view_video(request, video_id):
 
         return render(request, 'view_video.html', {'video': video})
     else:
-        messages.error(request, 'No such video in your UnTube collection!')
+        messages.error(request, 'No such video in your VidTube collection!')
         return redirect('home')
 
 
@@ -128,7 +128,7 @@ def video_notes(request, video_id):
         """
         )
     else:
-        return HttpResponse('No such video in your UnTube collection!')
+        return HttpResponse('No such video in your VidTube collection!')
 
 
 @login_required
@@ -805,7 +805,7 @@ def update_playlist(request, playlist_id, command):
             f"""
                 <div class='d-flex justify-content-center mt-4 mb-3' id='loading-sign'>
                     <h5 class='mt-2 ms-2'>Looks like the playlist '{playlist_name}' was deleted on YouTube. 
-                    It has been removed from UnTube as well.</h5>
+                    It has been removed from VidTube as well.</h5>
                 </div>
             """
         )
@@ -1007,19 +1007,19 @@ def delete_playlist(request, playlist_id):
             if video.playlists.all().count() == 0:
                 video.delete()
 
-        messages.success(request, 'Successfully deleted playlist from UnTube.')
+        messages.success(request, 'Successfully deleted playlist from VidTube.')
     else:
-        # deletes it from YouTube first then from UnTube
+        # deletes it from YouTube first then from VidTube
         status = Playlist.objects.deletePlaylistFromYouTube(request.user, playlist_id)
         if status[0] == -1:  # failed to delete playlist from youtube
             # if status[2] == 404:
             #    playlist.delete()
-            #    messages.success(request, 'Looks like the playlist was already deleted on YouTube. Removed it from UnTube as well.')
+            #    messages.success(request, 'Looks like the playlist was already deleted on YouTube. Removed it from VidTube as well.')
             #    return redirect('home')
             messages.error(request, f'[{status[1]}] Failed to delete playlist from YouTube :(')
             return redirect('view_playlist_settings', playlist_id=playlist_id)
 
-        messages.success(request, 'Successfully deleted playlist from YouTube and removed it from UnTube as well.')
+        messages.success(request, 'Successfully deleted playlist from YouTube and removed it from VidTube as well.')
 
     return redirect('home')
 
@@ -1244,6 +1244,6 @@ def playlist_create_new_playlist(request, playlist_id):
         message = f'Only added the first {added} video link(s) to the new playlist as the max playlist limit has been reached :('
     else:
         message = f"""Successfully created '{playlist_name}' and added {added} videos to it. Visit the 
-        <a href='/home/' target='_blank' style='text-decoration: none; color: white' class='ms-1 me-1'>dashboard</a> to import it into UnTube."""
+        <a href='/home/' target='_blank' style='text-decoration: none; color: white' class='ms-1 me-1'>dashboard</a> to import it into VidTube."""
 
     return HttpResponse(message)

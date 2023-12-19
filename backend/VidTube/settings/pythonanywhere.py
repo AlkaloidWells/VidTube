@@ -15,7 +15,7 @@ if IN_PYTHONANYWHERE:  # type: ignore # noqa: F821
     MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')  # type: ignore # noqa: F821 # noqa: F821
 
     # configure the domain name using the environment variable found on pythonanywhere
-    ALLOWED_HOSTS = ['bakaabu.pythonanywhere.com', '127.0.0.1', 'untube.it', '*']
+    ALLOWED_HOSTS = ['bakaabu.pythonanywhere.com', '127.0.0.1', 'vidtube.it', '*']
     SITE_ID = 10
 
     CSRF_COOKIE_SECURE = True

@@ -12,24 +12,16 @@ SOCIALACCOUNT_STORE_TOKENS = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_REQUIRED = True
 
-SOCIALACCOUNT_PROVIDERS = {
+SSOCIALACCOUNT_PROVIDERS = {
     'google': {
-        # 'APP': {
-        #     'client_id': GOOGLE_OAUTH_CLIENT_ID,  # type: ignore
-        #     'secret': GOOGLE_OAUTH_CLIENT_SECRET,  # type: ignore
-        #     'key': ''
-        # },
-        # 'OAUTH_PKCE_ENABLED': True,  # valid in allauth ver > 0.47.0
         'SCOPE': [
             'profile',
             'email',
             'https://www.googleapis.com/auth/youtube',
-            #'http://127.0.0.1:8000/accounts/google/login/callback/'
-
         ],
         'AUTH_PARAMS': {
-            # To refresh authentication in the background, set AUTH_PARAMS['access_type'] to offline.
             'access_type': 'offline',
+            'redirect_uri': 'http://example.com:8000/accounts/google/login/callback/',
         }
     }
 }

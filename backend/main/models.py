@@ -439,7 +439,7 @@ class PlaylistManager(models.Manager):
 
         playlist.save()
 
-    # Returns True if the video count for a playlist on UnTube and video count on same playlist on YouTube is different
+    # Returns True if the video count for a playlist on VidTube and video count on same playlist on YouTube is different
     def checkIfPlaylistChangedOnYT(self, user, pl_id):
         """
         If full_scan is true, the whole playlist (i.e each and every video from the PL on YT and PL on UT, is scanned and compared)

@@ -1,5 +1,5 @@
 """
-WSGI config for UnTube project.
+WSGI config for VidTube project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -10,7 +10,7 @@ https://docs.djangoproject.com/en/3.2/howto/deployment/wsgi/
 import os
 from django.core.wsgi import get_wsgi_application
 
-settings_module = 'backend.UnTube.settings'
+settings_module = 'backend.VidTube.settings'
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', settings_module)
 
 # to use env variables on pythonanywhere

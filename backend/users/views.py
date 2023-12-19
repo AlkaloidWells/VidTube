@@ -36,7 +36,7 @@ def index(request):
             print('Creating Google social app...')
             app = SocialApp.objects.create(
                 provider='google',
-                name='UnTube OAuth',
+                name='VidTube OAuth',
                 client_id=settings.GOOGLE_OAUTH_CLIENT_ID,
                 secret=settings.GOOGLE_OAUTH_CLIENT_SECRET
             )
@@ -306,9 +306,9 @@ def continue_import(request):
 @login_required
 def user_playlists_updates(request, action):
     """
-    Gets all user created playlist's ids from YouTube and checks them with the user playlists imported on UnTube.
-    If any playlist id is on UnTube but not on YouTube, deletes the playlist from YouTube.
-    If any new playlist id, imports it to UnTube
+    Gets all user created playlist's ids from YouTube and checks them with the user playlists imported on VidTube.
+    If any playlist id is on VidTube but not on YouTube, deletes the playlist from YouTube.
+    If any new playlist id, imports it to VidTube
     """
     if action == 'check-for-updates':
         user_playlists_on_UnTube = request.user.playlists.filter(Q(is_user_owned=True) &
@@ -358,7 +358,7 @@ def user_playlists_updates(request, action):
             <div class='alert alert-dismissible fade show' role='alert' style='background-color: cadetblue'>
                 <div class='d-flex justify-content-center mt-4 mb-3 ms-2' id='loading-sign' >
                     <img src='/static/svg-loaders/spinning-circles.svg' width='40' height='40'>
-                    <h5 class='mt-2 ms-2 text-black'>Importing {unimported_playlists} new playlists into UnTube, please wait!</h5>
+                    <h5 class='mt-2 ms-2 text-black'>Importing {unimported_playlists} new playlists into VidTube, please wait!</h5>
                 </div>
             </div>
         </div>
@@ -374,7 +374,7 @@ def user_playlists_updates(request, action):
         return HttpResponse(
             """
         <div class='alert alert-success alert-dismissible fade show d-flex justify-content-center' role='alert'>
-          <h4 class=''>Successfully imported new playlists into UnTube!</h4>
+          <h4 class=''>Successfully imported new playlists into VidTube!</h4>
             <meta http-equiv='refresh' content='0;url=/home/#recent-playlists' />
             <meta http-equiv='refresh' content='2;url=/home/' />
 
