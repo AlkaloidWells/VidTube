@@ -168,7 +168,7 @@
                         </div>
                         <div class="col-sm-9 text-white-50 d-flex justify-content-start">
                             <div id="delete-box">
-                                <a hx-get="{% url 'delete_playlist' playlist.playlist_id %}" hx-target="#delete-box" hx-vals='{"confirmed": "no"}' class="btn btn-outline-danger" hx-indicator="#delete-pl-loader">Remove Playlist From UnTube</a>
+                                <a hx-get="{% url 'delete_playlist' playlist.playlist_id %}" hx-target="#delete-box" hx-vals='{"confirmed": "no"}' class="btn btn-outline-danger" hx-indicator="#delete-pl-loader">Remove Playlist From VidTube</a>
                             </div>
                             <div id="delete-pl-loader">
                             <img src="{% static 'svg-loaders/rings.svg' %}" height="40" width="40" class="htmx-indicator">

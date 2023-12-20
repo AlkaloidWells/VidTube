@@ -5,11 +5,11 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="youtube, playlists, videos, delete videos, delete playlists, delete multiple videos, move multiple videos, merge playlists, video manager, playlist manager, youtube playlists, untube, google">
+    <meta name="keywords" content="youtube, playlists, videos, delete videos, delete playlists, delete multiple videos, move multiple videos, merge playlists, video manager, playlist manager, youtube playlists, VidTube, google">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="UnTube is a simple Youtube playlist manager. Modify and keep track of your YouTube playlists with ease.">
+    <meta name="description" content="VidTube is a simple Youtube playlist manager. Modify and keep track of your YouTube playlists with ease.">
     <meta name="author" content="Mohammed Abu Bakar Khan">
-    <title>UnTube - A Youtube Playlist Manager</title>
+    <title>VidTube - A Youtube Playlist Manager</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/carousel/">
 
@@ -61,7 +61,7 @@
 
     <div class="p-5 mb-4 bg-light rounded-3">
       <div class="container-fluid py-5">
-        <h1 class="display-5 fw-bold">UnTube</h1>
+        <h1 class="display-5 fw-bold">VidTube</h1>
         <p class="col-md-8 fs-4">A simple Youtube playlist manager to help you modify and keep track of your YouTube playlists with ease.</p>
 
           {% if user.is_authenticated %}
@@ -96,7 +96,7 @@
 
     <div class="row featurette">
         <div class="col-md-7 order-md-2">
-            <h1>UnTube automatically gets statistics for all your playlists when you first log in.</h1>
+            <h1>VidTube automatically gets statistics for all your playlists when you first log in.</h1>
             <p class="lead">For all of your YouTube playlists, statistics like playlist duration, number of unavailable videos, or whether the playlist has any duplicate videos are automatically calculated.</p>
         </div>
 
@@ -113,7 +113,7 @@
     <div class="row featurette">
         <div class="col-md-7">
             <h1 class="">Ideal for people with a lot of playlists on YouTube.</h1>
-            <p class="lead">UnTube offers features like bulk deletion as well as copying and moving videos from one playlist to multiple other playlists at once.</p>
+            <p class="lead">VidTube offers features like bulk deletion as well as copying and moving videos from one playlist to multiple other playlists at once.</p>
         </div>
         <div class="col-md-5">
             <div class="text-center">
@@ -129,8 +129,8 @@
         <div class="col-md-7 order-md-2">
             <h1 class="">Organize and search for playlists and videos in your collection.</h1>
             <p class="lead">
-                UnTube organizes your playlists into specific categories. Further, you can create your own categories by tagging playlists.
-                Since UnTube stores a reference to all the videos in your playlists, you can easily search for the videos you want.
+                VidTube organizes your playlists into specific categories. Further, you can create your own categories by tagging playlists.
+                Since VidTube stores a reference to all the videos in your playlists, you can easily search for the videos you want.
             </p>
         </div>
 
@@ -165,7 +165,7 @@
             <h1 class="">
             There's a public playlist you like?  Import them into your collection.</h1>
             <p class="lead">
-            You can import playlists you do not own into your UnTube collection. All the features above would still apply to playlists you do not own.
+            You can import playlists you do not own into your VidTube collection. All the features above would still apply to playlists you do not own.
             That means you can mark imported playlists as watching, tag them and also copy videos from imported playlists
             into your own playlists.
         </p>
@@ -223,7 +223,7 @@
             <h3>
                 This app was made possible because of the <a href="https://developers.google.com/youtube/v3/" target="_blank" style="text-decoration: none;"><span style="border-bottom: 4px #d56b80 dashed;">YouTube Data API</span></a>. By logging in with Google I get access to your
                 public Google account information <i class="fa fa-plus"></i> the permission to modify your YouTube data. That means you can manage
-                your private playlists on UnTube.
+                your private playlists on VidTube.
             </h3>
                 </div>
     </div>
@@ -252,10 +252,10 @@
           </a>
           -->
                     <small><i class="fas fa-circle fa-sm"></i></small>
-        <a style="text-decoration: none; color: black" href="https://github.com/sleepytaco/UnTube" target="_blank"><i class="fab fa-github fa-lg" style="color: black;"></i></a>
+        <a style="text-decoration: none; color: black" href="https://github.com/sleepytaco/VidTube" target="_blank"><i class="fab fa-github fa-lg" style="color: black;"></i></a>
           <small><i class="fas fa-circle fa-sm"></i></small>
-          <a {% if request.session.liked_untube %}hx-post="{% url 'unlike_untube' %}"{% else %}hx-post="{% url 'like_untube' %}"{% endif %} hx-trigger="click" hx-swap="outerHTML" style="text-decoration: none; color: black">
-            <i class="fas fa-heart" {% if request.session.liked_untube %}style="color: #d02e2e"{% endif %}></i> {{ likes }} likes {% if not request.session.liked_untube %}(click it){% endif %}
+          <a {% if request.session.liked_vidtube %}hx-post="{% url 'unlike_vidtube' %}"{% else %}hx-post="{% url 'like_vidtube' %}"{% endif %} hx-trigger="click" hx-swap="outerHTML" style="text-decoration: none; color: black">
+            <i class="fas fa-heart" {% if request.session.liked_vidtube %}style="color: #d02e2e"{% endif %}></i> {{ likes }} likes {% if not request.session.liked_vidtube %}(click it){% endif %}
           </a>
                           <small><i class="fas fa-circle fa-sm"></i></small>
 

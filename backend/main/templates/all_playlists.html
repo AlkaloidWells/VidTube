@@ -55,9 +55,9 @@
                     {% if library_type == "watching" %}
                         You can mark a playlist as watching by heading over to the playlist and marking it from the dropdown.
                     {% elif library_type == "all" %}
-                        There's no playlists in your UnTube right now.
+                        There's no playlists in your VidTube right now.
                     {% elif library_type == "imported" %}
-                        To import public playlists into your UnTube collection you can head over to <a href="{% url 'manage_view_page' 'import' %}" class="btn btn-sm btn-primary ms-2">Import</a>
+                        To import public playlists into your VidTube collection you can head over to <a href="{% url 'manage_view_page' 'import' %}" class="btn btn-sm btn-primary ms-2">Import</a>
                     {% elif library_type == "plan-to-watch" %}
                         You can mark a playlist as plan to watch by heading over to the playlist and marking it from the dropdown.
                     {% elif library_type == "favorites" %}

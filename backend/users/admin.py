@@ -13,7 +13,7 @@ class ProfileResource(resources.ModelResource):
 
 class ProfileAdmin(ImportExportModelAdmin):
     resource_class = ProfileResource
-    list_display = ('untube_user', 'access_token', 'refresh_token')
+    list_display = ('vidtube_user', 'access_token', 'refresh_token')
     list_filter = ('created_at',)
 
 

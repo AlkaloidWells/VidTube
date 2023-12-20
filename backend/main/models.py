@@ -150,7 +150,7 @@ class PlaylistManager(models.Manager):
             playlist_id = item['id']
             playlist_ids.append(playlist_id)
 
-            # check if this playlist already exists in user's untube collection
+            # check if this playlist already exists in user's vidtube collection
             if user.playlists.filter(Q(playlist_id=playlist_id) & Q(is_in_db=True)).exists():
                 playlist = user.playlists.get(playlist_id=playlist_id)
                 logger.debug(f'PLAYLIST {playlist.name} ({playlist_id}) ALREADY EXISTS IN DB')
@@ -187,7 +187,7 @@ class PlaylistManager(models.Manager):
                     video_count=item['contentDetails']['itemCount'],
                     is_private_on_yt=True if item['status']['privacyStatus'] == 'private' else False,
                     playlist_yt_player_HTML=item['player']['embedHtml'],
-                    untube_user=user,
+                    vidtube_user=user,
                     is_user_owned=True if item['snippet']['channelId'] == user.profile.yt_channel_id else False,
                     is_yt_mix=True if ('My Mix' in item['snippet']['title'] or 'Mix -' in item['snippet']['title']) and
                                       (item['snippet']['channelId'] == 'UCBR8-60-B28hp2BmDPdntcQ') else False
@@ -220,8 +220,8 @@ class PlaylistManager(models.Manager):
                 video_id = item['contentDetails']['videoId']
                 video_ids.append(video_id)
 
-                # video DNE in user's untube:
-                # 1. create and save the video in user's untube
+                # video DNE in user's vidtube:
+                # 1. create and save the video in user's vidtube
                 # 2. add it to playlist
                 # 3. make a playlist item which is linked to the video
                 if not user.videos.filter(video_id=video_id).exists():
@@ -233,7 +233,7 @@ class PlaylistManager(models.Manager):
                             name=item['snippet']['title'],
                             description=item['snippet']['description'],
                             is_unavailable_on_yt=True,
-                            untube_user=user
+                            vidtube_user=user
                         )
                         video.save()
                     else:
@@ -246,7 +246,7 @@ class PlaylistManager(models.Manager):
                             thumbnail_url=getThumbnailURL(item['snippet']['thumbnails']),
                             channel_id=item['snippet']['videoOwnerChannelId'],
                             channel_name=item['snippet']['videoOwnerChannelTitle'],
-                            untube_user=user
+                            vidtube_user=user
                         )
                         video.save()
 
@@ -308,8 +308,8 @@ class PlaylistManager(models.Manager):
                         video_id = item['contentDetails']['videoId']
                         video_ids.append(video_id)
 
-                        # video DNE in user's untube:
-                        # 1. create and save the video in user's untube
+                        # video DNE in user's vidtube:
+                        # 1. create and save the video in user's vidtube
                         # 2. add it to playlist
                         # 3. make a playlist item which is linked to the video
                         if not user.videos.filter(video_id=video_id).exists():
@@ -322,7 +322,7 @@ class PlaylistManager(models.Manager):
                                     name=item['snippet']['title'],
                                     description=item['snippet']['description'],
                                     is_unavailable_on_yt=True,
-                                    untube_user=user
+                                    vidtube_user=user
                                 )
                                 video.save()
                             else:
@@ -335,7 +335,7 @@ class PlaylistManager(models.Manager):
                                     thumbnail_url=getThumbnailURL(item['snippet']['thumbnails']),
                                     channel_id=item['snippet']['videoOwnerChannelId'],
                                     channel_name=item['snippet']['videoOwnerChannelTitle'],
-                                    untube_user=user
+                                    vidtube_user=user
                                 )
                                 video.save()
 
@@ -653,7 +653,7 @@ class PlaylistManager(models.Manager):
                                 name=item['snippet']['title'],
                                 description=item['snippet']['description'],
                                 is_unavailable_on_yt=True,
-                                untube_user=user
+                                vidtube_user=user
                             )
                             video.save()
                         else:
@@ -666,7 +666,7 @@ class PlaylistManager(models.Manager):
                                 thumbnail_url=getThumbnailURL(item['snippet']['thumbnails']),
                                 channel_id=item['snippet']['videoOwnerChannelId'],
                                 channel_name=item['snippet']['videoOwnerChannelTitle'],
-                                untube_user=user
+                                vidtube_user=user
                             )
                             video.save()
 
@@ -760,7 +760,7 @@ class PlaylistManager(models.Manager):
                                         name=item['snippet']['title'],
                                         description=item['snippet']['description'],
                                         is_unavailable_on_yt=True,
-                                        untube_user=user
+                                        vidtube_user=user
                                     )
                                     video.save()
                                 else:
@@ -773,7 +773,7 @@ class PlaylistManager(models.Manager):
                                         thumbnail_url=getThumbnailURL(item['snippet']['thumbnails']),
                                         channel_id=item['snippet']['videoOwnerChannelId'],
                                         channel_name=item['snippet']['videoOwnerChannelTitle'],
-                                        untube_user=user
+                                        vidtube_user=user
                                     )
                                     video.save()
 
@@ -1266,7 +1266,7 @@ class Tag(models.Model):
 
 
 class Video(models.Model):
-    untube_user = models.ForeignKey(User, related_name='videos', on_delete=models.CASCADE, null=True)
+    vidtube_user = models.ForeignKey(User, related_name='videos', on_delete=models.CASCADE, null=True)
 
     # video details
     video_id = models.CharField(max_length=100)
@@ -1330,7 +1330,7 @@ class Video(models.Model):
 
 class Playlist(models.Model):
     tags = models.ManyToManyField(Tag, related_name='playlists')
-    untube_user = models.ForeignKey(User, related_name='playlists', on_delete=models.CASCADE, null=True)
+    vidtube_user = models.ForeignKey(User, related_name='playlists', on_delete=models.CASCADE, null=True)
 
     # playlist is made by this channel
     channel_id = models.TextField(blank=True)
@@ -1522,9 +1522,9 @@ class PlaylistItem(models.Model):
 
 
 class Pin(models.Model):
-    untube_user = models.ForeignKey(
+    vidtube_user = models.ForeignKey(
         User, related_name='pins', on_delete=models.CASCADE, null=True
-    )  # untube user this pin is linked to
+    )  # vidtube user this pin is linked to
     kind = models.CharField(max_length=100)  # 'playlist', 'video'
     playlist = models.ForeignKey(Playlist, on_delete=models.CASCADE, null=True)
     video = models.ForeignKey(Video, on_delete=models.CASCADE, null=True)

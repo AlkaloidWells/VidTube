@@ -7,7 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Namespacing our own custom environment variables
-ENVVAR_SETTINGS_PREFIX = 'UNTUBE_SETTINGS_'
+ENVVAR_SETTINGS_PREFIX = 'VIDTUBE_SETTINGS_'
 
 LOCAL_SETTINGS_PATH = os.getenv(f'{ENVVAR_SETTINGS_PREFIX}LOCAL_SETTINGS_PATH')
 

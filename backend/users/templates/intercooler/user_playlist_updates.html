@@ -6,7 +6,7 @@
 
       <p>
           {% if playlists %}
-          The following new playlists were detected on your YouTube channel and are not on UnTube:
+          The following new playlists were detected on your YouTube channel and are not on VidTube:
           <ul>
                 {% for playlist in playlists %}
                     <li>
@@ -23,7 +23,7 @@
             </ul>
           {% endif %}
         {% if deleted_playlist_names %}
-        The following playlists were deleted on YouTube (and have also been removed from UnTube):
+        The following playlists were deleted on YouTube (and have also been removed from VidTube):
             <ul>
                 {% for playlist in deleted_playlist_names %}
                     <li>

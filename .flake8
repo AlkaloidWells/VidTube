@@ -13,4 +13,4 @@ max-linenumber = 500
 max-line-length = 150
 multiline-quotes = double
 per-file-ignores =
-    backend/UnTube/settings/templates/settings.dev.py:F821
+    backend/VidTube/settings/templates/settings.dev.py:F821

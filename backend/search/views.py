@@ -40,7 +40,7 @@ def search(request):
             vid_channel_name = ''
 
         return render(
-            request, 'search_untube_page.html', {
+            request, 'search_vidtube_page.html', {
                 'playlists': request.user.playlists.all(),
                 'mode': mode,
                 'item_type': item_type,
@@ -55,7 +55,7 @@ def search(request):
 
 @login_required
 @require_POST
-def search_UnTube(request):
+def search_VidTube(request):
     search_query = bleach.clean(request.POST['search'])
 
     if request.POST['search-settings'] == 'playlists':
@@ -97,7 +97,7 @@ def search_UnTube(request):
             playlists = playlists.order_by('-video_count')
 
         return HttpResponse(
-            loader.get_template('intercooler/search_untube_results.html').render({
+            loader.get_template('intercooler/search_vidtube_results.html').render({
                 'playlists': playlists,
                 'view_mode': 'playlists',
                 'search_query': search_query,
@@ -151,7 +151,7 @@ def search_UnTube(request):
             videos = videos.filter(playlists__playlist_id__in=playlist_ids)
 
         return HttpResponse(
-            loader.get_template('intercooler/search_untube_results.html').render({
+            loader.get_template('intercooler/search_vidtube_results.html').render({
                 'videos': videos,
                 'view_mode': 'videos',
                 'videos_type': videos_type,

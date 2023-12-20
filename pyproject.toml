@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "untube"
+name = "vidtube"
 version = "0.1.0"
 description = ""
 authors = ["Alkaloid Wells <alkaliod111@gmail.com>"]

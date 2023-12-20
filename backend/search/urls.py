@@ -4,7 +4,7 @@ from . import views
 
 urlpatterns = [
     path('', views.search, name='search'),
-    path('untube/', views.search_UnTube, name='search_UnTube'),
+    path('vidtube/', views.search_VidTube, name='search_VidTube'),
     path('library/<slug:library_type>', views.search_library, name='search_library'),
     path('tagged-playlists/<str:tag>', views.search_tagged_playlists, name='search_tagged_playlists'),
 ]

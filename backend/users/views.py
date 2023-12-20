@@ -12,7 +12,7 @@ from django.shortcuts import redirect, render
 from django.template import loader
 from django.views.decorators.http import require_POST
 from backend.main.models import Playlist
-from .models import Untube
+from .models import Vidtube
 import logging
 
 logger = logging.getLogger(__name__)
@@ -20,9 +20,9 @@ logger = logging.getLogger(__name__)
 
 # Create your views here.
 def index(request):
-    if Untube.objects.all().count() == 0:
-        untube = Untube.objects.create()
-        untube.save()
+    if Vidtube.objects.all().count() == 0:
+        vidtube = Vidtube.objects.create()
+        vidtube.save()
 
     if settings.GOOGLE_OAUTH_CLIENT_ID is NotImplemented or settings.GOOGLE_OAUTH_CLIENT_SECRET is NotImplemented:
         messages.error(request, 'Please fill in your Google OAuth credentials in the local/settings.dev.py file')
@@ -45,17 +45,17 @@ def index(request):
 
     if not request.session.exists(request.session.session_key):
         request.session.create()
-        request.session['liked_untube'] = False
+        request.session['liked_vidtube'] = False
 
     return render(
         request, 'index.html', {
-            'likes': Untube.objects.all().first().page_likes,
+            'likes': Vidtube.objects.all().first().page_likes,
             'users_joined': User.objects.all().count()
         }
     )
 
     # if request.user.is_anonymous:
-    #     return render(request, 'index.html', {'likes': Untube.objects.all().first().page_likes,
+    #     return render(request, 'index.html', {'likes': Vidtube.objects.all().first().page_likes,
     #                                           'users_joined': User.objects.all().count()})
     # else:
     #     return redirect('home')
@@ -311,27 +311,26 @@ def user_playlists_updates(request, action):
     If any new playlist id, imports it to VidTube
     """
     if action == 'check-for-updates':
-        user_playlists_on_UnTube = request.user.playlists.filter(Q(is_user_owned=True) &
-                                                                 Q(is_in_db=True)).exclude(playlist_id='LL')
+        user_playlists_on_VidTube = request.user.playlists.filter(Q(is_user_owned=True) & Q(is_in_db=True)).exclude(playlist_id='LL')
 
         result = Playlist.objects.initializePlaylist(request.user)
 
         logger.debug(result)
         youtube_playlist_ids = result['playlist_ids']
-        untube_playlist_ids = []
-        for playlist in user_playlists_on_UnTube:
-            untube_playlist_ids.append(playlist.playlist_id)
+        vidtube_playlist_ids = []
+        for playlist in user_playlists_on_VidTube:
+            vidtube_playlist_ids.append(playlist.playlist_id)
 
         deleted_playlist_ids = []
         deleted_playlist_names = []
-        for pl_id in untube_playlist_ids:
+        for pl_id in vidtube_playlist_ids:
             if pl_id not in youtube_playlist_ids:  # ie this playlist was deleted on youtube
                 deleted_playlist_ids.append(pl_id)
                 pl = request.user.playlists.get(playlist_id__exact=pl_id)
                 deleted_playlist_names.append(f'{pl.name} (had {pl.video_count} videos)')
                 pl.delete()
 
-        if result['num_of_playlists'] == user_playlists_on_UnTube.count() and len(deleted_playlist_ids) == 0:
+        if result['num_of_playlists'] == user_playlists_on_VidTube.count() and len(deleted_playlist_ids) == 0:
             logger.info('No new updates')
             playlists = []
         else:
@@ -400,36 +399,35 @@ def get_user_liked_videos_playlist(request):
 
 # FOR INDEX.HTML
 @require_POST
-def like_untube(request):
-    untube = Untube.objects.all().first()
-    untube.page_likes += 1
-    untube.save()
+def like_vidtube(request):
+    vidtube = Vidtube.objects.all().first()
+    vidtube.page_likes += 1
+    vidtube.save()
 
-    request.session['liked_untube'] = True
+    request.session['liked_vidtube'] = True
     request.session.save()
 
     return HttpResponse(
         f"""
-            <a hx-post='/unlike-untube/' hx-swap='outerHTML' style='text-decoration: none; color: black'>
-            <i class='fas fa-heart' style='color: #d02e2e'></i> {untube.page_likes} likes (p.s glad you liked it!)
+            <a hx-post='/unlike-vidtube/' hx-swap='outerHTML' style='text-decoration: none; color: black'>
+            <i class='fas fa-heart' style='color: #d02e2e'></i> {vidtube.page_likes} likes (p.s glad you liked it!)
           </a>
     """
     )
 
 
 @require_POST
-def unlike_untube(request):
-    untube = Untube.objects.all().first()
-    untube.page_likes -= 1
-    untube.save()
+def unlike_vidtube(request):
+    vidtube = Vidtube.objects.all().first()
+    vidtube.page_likes -= 1
+    vidtube.save()
 
-    request.session['liked_untube'] = False
+    request.session['liked_vidtube'] = False
     request.session.save()
 
     return HttpResponse(
         f"""
-                <a hx-post='/like-untube/' hx-swap='outerHTML' style='text-decoration: none; color: black'>
-                <i class='fas fa-heart'></i> {untube.page_likes} likes (p.s :/)
+                <a hx-post='/like-vidtube/' hx-swap='outerHTML' style='text-decoration: none; color: black'>
+                <i class='fas fa-heart'></i> {vidtube.page_likes} likes (p.s :/)
               </a>
-        """
-    )
+        """)

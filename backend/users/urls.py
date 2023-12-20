@@ -4,8 +4,8 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('like-untube/', views.like_untube, name='like_untube'),
-    path('unlike-untube/', views.unlike_untube, name='unlike_untube'),
+    path('like-vidtube/', views.like_vidtube, name='like_vidtube'),
+    path('unlike-vidtube/', views.unlike_vidtube, name='unlike_vidtube'),
     path('profile/', views.profile, name='profile'),
     path('about/', views.about, name='about'),
     path('logout/', views.log_out, name='log_out'),

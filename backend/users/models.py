@@ -9,13 +9,13 @@ from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 
 
-class Untube(models.Model):
+class Vidtube(models.Model):
     page_likes = models.IntegerField(default=0)
 
 
 # extension of the built in User model made by Django
 class Profile(models.Model):
-    untube_user = models.OneToOneField(User, on_delete=models.CASCADE)
+    vidtube_user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -59,7 +59,7 @@ class Profile(models.Model):
     create_playlist_add_vids_from_links = models.CharField(max_length=50, default='')
 
     def __str__(self):
-        return f'{self.untube_user.username} ({self.untube_user.email})'
+        return f'{self.vidtube_user.username} ({self.vidtube_user.email})'
 
     def get_credentials(self):
         """
@@ -67,7 +67,7 @@ class Profile(models.Model):
         """
         # if the profile model does not hold the tokens, retrieve them from user's SocialToken entry and save them into profile
         if self.access_token.strip() == '' or self.refresh_token.strip() == '':
-            user_social_token = SocialToken.objects.get(account__user=self.untube_user)
+            user_social_token = SocialToken.objects.get(account__user=self.vidtube_user)
             self.access_token = user_social_token.token
             self.refresh_token = user_social_token.token_secret
             self.expires_at = user_social_token.expires_at
@@ -93,7 +93,7 @@ class Profile(models.Model):
 
     def get_channels_list(self):
         channels_list = []
-        videos = self.untube_user.videos.filter(Q(is_unavailable_on_yt=False) & Q(was_deleted_on_yt=False))
+        videos = self.vidtube_user.videos.filter(Q(is_unavailable_on_yt=False) & Q(was_deleted_on_yt=False))
 
         queryset = videos.values('channel_name').annotate(channel_videos_count=Count('video_id')
                                                           ).order_by('-channel_videos_count')
@@ -104,14 +104,14 @@ class Profile(models.Model):
         return channels_list
 
     def get_playlists_list(self):
-        return self.untube_user.playlists.all().filter(is_in_db=True)
+        return self.vidtube_user.playlists.all().filter(is_in_db=True)
 
 
 # as soon as one User object is created, create an associated profile object
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
-        Profile.objects.create(untube_user=instance)
+        Profile.objects.create(vidtube_user=instance)
 
 
 # whenever User.save() happens, Profile.save() also happens
