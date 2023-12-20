@@ -6,11 +6,11 @@
         <div class="alert alert-success" role="alert">
             <h4 class="alert-heading">It's empty in here</h4>
             <p>
-                There's no playlists in your UnTube right now. You can change that by heading over to <a href="{% url 'manage_view_page' 'import' %}" class="btn btn-sm btn-primary">Import</a> to import some public playlists into your UnTube.
+                There's no playlists in your VidTube right now. You can change that by heading over to <a href="{% url 'manage_view_page' 'import' %}" class="btn btn-sm btn-primary">Import</a> to import some public playlists into your VidTube.
                 {% if not user.profile.imported_yt_playlists %}
                     Or you could always head over to your <a href="{% url 'settings' %}" class="btn btn-sm btn-primary">Profile</a> to import all of your public/private YouTube playlists.
                 {% else %}
-                    Keep in mind that your own YouTube playlists will automatically be imported into UnTube.
+                    Keep in mind that your own YouTube playlists will automatically be imported into VidTube.
                 {% endif %}
             </p>
         </div>
@@ -20,7 +20,7 @@
         <br>
         <br>
         <div class="d-flex justify-content-center pt-3 pb-2 mb-3">
-            <h1>Welcome to UnTube, {{ user.username|capfirst }}</h1>
+            <h1>Welcome to VidTube, {{ user.username|capfirst }}</h1>
         </div>
         <div class="d-flex justify-content-center pt-3 pb-2 mb-3">
             <h2>{{ imported_playlists_count }} playlists from YouTube have been successfully imported.</h2>
@@ -49,7 +49,7 @@
             <div class="col-6 mb-4">
                 <div class="card bg-transparent text-dark">
                     <div class="card-body">
-                        <h6 class="d-flex justify-content-center align-items-center mb-3">You have a total of <span class="text-warning ms-1 me-1">{{ user.playlists.count }}</span> Playlists in your UnTube collection</h6>
+                        <h6 class="d-flex justify-content-center align-items-center mb-3">You have a total of <span class="text-warning ms-1 me-1">{{ user.playlists.count }}</span> Playlists in your VidTube collection</h6>
                         <div class="d-flex align-items-center mb-3">
 
                             <canvas id="overall-playlists-distribution" data-url="{% url 'overall_playlists_distribution' %}">
@@ -63,7 +63,7 @@
             <div class="col-6 mb-4">
                 <div class="card bg-transparent text-dark">
                     <div class="card-body">
-                        <h6 class="d-flex justify-content-center align-items-center mb-3">A total of <span class="text-warning me-1 ms-1" id="num-channels">{{ channels.count|intword|intcomma }} channels</span> and <span class="text-warning ms-1 me-1" id="num-channels"> {{ videos.count|intword|intcomma }} videos</span> found in your UnTube collection </h6>
+                        <h6 class="d-flex justify-content-center align-items-center mb-3">A total of <span class="text-warning me-1 ms-1" id="num-channels">{{ channels.count|intword|intcomma }} channels</span> and <span class="text-warning ms-1 me-1" id="num-channels"> {{ videos.count|intword|intcomma }} videos</span> found in your VidTube collection </h6>
                         {% if channels.count > 100 %}<h6 class="d-flex justify-content-center">(Only top 100 channels shown below)</h6>{% endif %}
                         <div class="d-flex align-items-center mb-3">
 
