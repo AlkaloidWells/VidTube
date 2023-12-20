@@ -1,48 +1,48 @@
-# UnTube
+# VidTube
 
 A simple, comprehensive YouTube playlist manager web app powered by [YouTube Data API V3](https://developers.google.com/youtube/v3/). Built with ❤ using Django, htmx and Bootstrap. 
 
-![UnTube Dashboard](walkthroughs/dashboard.gif)
+![VidTube Dashboard](walkthroughs/dashboard.gif)
 
 
-### _Update: I have revised the project structure to make it easier to run locally. Instructions to run UnTube locally can be found below._
+### _Update: I have revised the project structure to make it easier to run locally. Instructions to run VidTube locally can be found below._
 
 
 ## About
 
-I built UnTube with the goal of making it easier to manage multiple YouTube playlists. UnTube makes it possible to bulk delete videos from a playlist, take care of duplicate or unavailable videos, bulk copy/move videos from one playlist to other playlists. All you have to do is log in with your Google account and import your playlists to access these basic features + more!
+I built VidTube with the goal of making it easier to manage multiple YouTube playlists. VidTube makes it possible to bulk delete videos from a playlist, take care of duplicate or unavailable videos, bulk copy/move videos from one playlist to other playlists. All you have to do is log in with your Google account and import your playlists to access these basic features + more!
 
 ## Features
 
-Apart from the base features mentioned above, UnTube offers more:
+Apart from the base features mentioned above, VidTube offers more:
 
 - Classify playlists into specific categories—for example, pin and favorite playlists/videos. For custom categories, you can create and assign tags to playlists.
 - A comprehensive search bar to search every corner of all your playlist. The search bar is filled with features such as filter by tags, sort results based on parameters, etc
 - Various overall and specific statistics and charts are provided for your playlists. For example, playlist duration, playlist video distribution per channel, etc.
 - Set a playlist as 'watching' and see the remaining playlist duration update as you mark a video inside the playlist as watched.
-- Import public playlists to your own UnTube collection. After importing, you can copy videos from that playlist into your own playlists.
+- Import public playlists to your own VidTube collection. After importing, you can copy videos from that playlist into your own playlists.
 - Set a gradient background ;)
 
 ## Walkthroughs
 
-### Organize your playlists using Tags + Search for videos and playlist found in your UnTube collection
+### Organize your playlists using Tags + Search for videos and playlist found in your VidTube collection
 
-![UnTube Organize and Search](walkthroughs/organize-and-search.gif)
+![VidTube Organize and Search](walkthroughs/organize-and-search.gif)
 
-### Import public playlists into your UnTube collection
+### Import public playlists into your VidTube collection
 
-![UnTube Import Public Playlists](walkthroughs/import-public.gif)
+![VidTube Import Public Playlists](walkthroughs/import-public.gif)
 
 ### Perform bulk playlist operations
 
-![UnTube bulk playlist operations](https://bakaabu.pythonanywhere.com/static/assets/imgs/features.70cfacf34e92.gif)
+![VidTube bulk playlist operations](https://bakaabu.pythonanywhere.com/static/assets/imgs/features.70cfacf34e92.gif)
 
 ### Mark playlists as watching
 
-![UnTube Mark Watching](walkthroughs/mark-watching.gif?raw=true)
+![VidTube Mark Watching](walkthroughs/mark-watching.gif?raw=true)
 
 
-## Running UnTube locally
+## Running VidTube locally
 
 - Follow [Poetry Installation](https://python-poetry.org/docs/#installing-with-the-official-installer) guide for your system.
 - Run `make update` to install all the dependencies and run the migrations. Note that Poetry will automatically create a virtual environment and manage it for you.
@@ -79,7 +79,7 @@ Most of the dynamic interactivity on this site was made possible due to [htmx](h
 -    <b>Infinite Scrolling</b> For playlists with more than 50 videos, the next 50 videos are automatically loaded onto the screen only when the user scrolls down to the bottom. htmx's <code>hx-trigger="revealed"</code> and <code>hx-swap="afterend"</code> attributes helped me achieve this functionality. When the 50th video is revealed on the screen, htmx makes a GET request to the backend to get the next 50 videos (if available) and appends the HttpResponse after the 50th video. Until htmx gets back a response from the backend, it can be set up to show the user a loading spinner!<br>
     The main advantage of this feature was that for playlists with 100s or even 1000s of videos, it only needs to load the first 50 videos every time, vastly improving the playlist page load speed.
     
-Additional interactive features such as the progress bar and tagging playlist were all made possible because of htmx. Any questions on how I've implemented some of the features on this site? Please send me an email at [abukhan363@gmail.com](mailto:abukhan363@gmail.com) with your feedback and questions. I will be happy to share my code and thought process to illustrate how I implemented the site's features using htmx. 
+Additional interactive features such as the progress bar and tagging playlist were all made possible because of htmx. Any questions on how I've implemented some of the features on this site? Please send me an email at [alkaliod111@gmail.com](mailto:alkaliod111@gmail.com) with your feedback and questions. I will be happy to share my code and thought process to illustrate how I implemented the site's features using htmx. 
 
 
 ## To Do 
